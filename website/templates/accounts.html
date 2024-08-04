@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Accounts</h1>
+
+<form method="POST" action="{% url 'accounts' %}">
+	{% csrf_token %}
+	<form>
+	  <button type="submit" class="btn btn-secondary">Retrieve accounts from Pluggy API</button>
+	</form>
+<br/>
+
+{% if accounts %}
+	{% for account in accounts %}
+	<div class="card">
+		<div class="card-header">
+			<strong>ID: </strong>{{ account.id }}<br/>
+		</div>
+		<div class="card-body">
+			<p class="card-text">
+				<strong>Type: </strong>{{ account.tipo }}<br/>
+				<strong>Subtype: </strong>{{ account.subtype }}<br/>
+				<strong>Owner: </strong>{{ account.owner }}<br/>
+				<strong>Tax Number: </strong>{{ account.taxNumber }}<br/>
+				<strong>Number: </strong>{{ account.number }}<br/>
+				<strong>Name: </strong>{{ account.name }}<br/>
+				<strong>Marketing Name: </strong>{{ account.marketingName }}<br/>
+				<strong>Balance: </strong>{{ account.balance }}<br/>
+				<strong>Currency Code: </strong>{{ account.currencyCode }}<br/>
+				<strong>Age: </strong>{{ account.age }}<br/>
+			</p>
+		</div>
+	</div>
+	<br/>
+	{% endfor %}
+{% endif %}
+<br/>
+<!--
+<div class="table-responsive">
+	<table class="table table-striped table-hover table-bordered">
+	  <thead>
+	    <tr>
+	      <th scope="col">ID</th>
+	      <th scope="col">Type</th>
+	      <th scope="col">Subtype</th>
+	      <th scope="col">Owner</th>
+	      <th scope="col">Tax Number</th>
+	      <th scope="col">Number</th>
+	      <th scope="col">Name</th>
+	      <th scope="col">Marketing Name</th>
+	      <th scope="col">Balance</th>
+	      <th scope="col">Currency Code</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		{% if accounts %}
+			{% for account in accounts %}
+				<tr>
+					<td>{{ account.id }}</td>
+					<td>{{ account.tipo }}</td>
+					<td>{{ account.subtype }}</td>
+					<td>{{ account.owner }}</td>
+					<td>{{ account.taxNumber }}</td>
+					<td>{{ account.number }}</td>
+					<td>{{ account.name }}</td>
+					<td>{{ account.marketingName }}</td>
+					<td>{{ account.balance }}</td>
+					<td>{{ account.currencyCode }}</td>
+		    	</tr>
+			{% endfor %}
+		{% endif %}
+	  </tbody>
+	</table>
+</div>
+-->
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Transactions</h1>
+
+<form method="POST" action="{% url 'transactions' %}">
+	{% csrf_token %}
+	<form>
+	  <button type="submit" class="btn btn-secondary">Retrieve all transactions from Pluggy API</button>
+	</form>
+<br/>
+
+{% if 'search_trigger' in request.session %}
+	<a>HELLO WORLD</a><br/>
+{% endif %}
+
+
+{% if transactions %}
+	{% for transaction in transactions %}
+	<div class="card">
+		<div class="card-header">
+			<strong>ID: </strong>{{ transaction.id }}<br/>
+		</div>
+		<div class="card-body">
+			<p class="card-text">
+				<strong>Account ID: </strong>{{ transaction.accountId }}<br/>
+				<strong>Date: </strong>{{ transaction.date }}<br/>
+				<strong>Status: </strong>{{ transaction.status }}<br/>
+				<strong>Type: </strong>{{ transaction.tipo }}<br/>
+				<strong>Description: </strong>{{ transaction.description }}<br/>
+				<strong>Amount: </strong>{{ transaction.amount }}<br/>
+				<strong>Balance: </strong>{{ transaction.balance }}<br/>
+				<strong>Amount In Account Currency: </strong>{{ transaction.amountInAccountCurrency }}<br/>
+				<strong>Currency Code: </strong>{{ transaction.currencyCode }}<br/>
+				<strong>Category: </strong>{{ transaction.category }}<br/>
+				<strong>Category ID: </strong>{{ transaction.categoryId }}<br/>
+				<strong>Provider Code: </strong>{{ transaction.providerCode }}<br/>
+			</p>
+			{% if merchants %}
+				{% for merchant in merchants %}
+					{% if merchant.transactionId == transaction.id %}
+					<p class="card-text">
+						<strong>Merchant: </strong><br/>
+						<strong>    Name: </strong>{{ merchant.name }}<br/>
+						<strong>    Business Name: </strong>{{ merchant.businessName }}<br/>
+						<strong>    CNPJ: </strong>{{ merchant.cnpj }}<br/>
+						<strong>    CNAE: </strong>{{ merchant.cnae }}<br/>
+						<strong>    Category: </strong>{{ merchant.category }}<br/>
+					</p>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+			{% if creditcards %}
+				{% for creditcard in creditcards %}
+					{% if creditcard.transactionId == transaction.id %}
+					<p class="card-text">
+						<strong>Credit Card Metadata: </strong><br/>
+						<strong>    Installment Number: </strong>{{ creditcard.installmentNumber }}<br/>
+						<strong>    Total Installments: </strong>{{ creditcard.totalInstallments }}<br/>
+						<strong>    Total Amount: </strong>{{ creditcard.totalAmount }}<br/>
+						<strong>     Payee MCC: </strong>{{ creditcard.payeeMCC }}<br/>
+						<strong>    Card Number: </strong>{{ creditcard.cardNumber }}<br/>
+						<strong>    Bill ID: </strong>{{ creditcard.billId }}<br/>
+					</p>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+	<br/>
+	{% endfor %}
+{% endif %}
+<br/>
+
+<!--
+<div class="table-responsive">
+	<table class="table table-striped table-hover table-bordered">
+	  <thead>
+	    <tr>
+	      <th scope="col">ID</th>
+	      <th scope="col">Type</th>
+	      <th scope="col">Subtype</th>
+	      <th scope="col">Owner</th>
+	      <th scope="col">Tax Number</th>
+	      <th scope="col">Number</th>
+	      <th scope="col">Name</th>
+	      <th scope="col">Marketing Name</th>
+	      <th scope="col">Balance</th>
+	      <th scope="col">Currency Code</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		{% if transactions %}
+			{% for transaction in transactions %}
+				<tr>
+					<td>{{ transaction.id }}</td>
+					<td>{{ transaction.tipo }}</td>
+					<td>{{ transaction.subtype }}</td>
+					<td>{{ transaction.owner }}</td>
+					<td>{{ transaction.taxNumber }}</td>
+					<td>{{ transaction.number }}</td>
+					<td>{{ transaction.name }}</td>
+					<td>{{ transaction.marketingName }}</td>
+					<td>{{ transaction.balance }}</td>
+					<td>{{ transaction.currencyCode }}</td>
+		    	</tr>
+			{% endfor %}
+		{% endif %}
+	  </tbody>
+	</table>
+</div>
+-->
+
+</div>
+
+{% endblock %}

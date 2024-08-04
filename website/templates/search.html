@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-md-6 offset-md-3">
+
+<h1>Search</h1><br/>
+
+<form method="POST" action="{% url 'search' %}">
+	{% csrf_token %}
+
+	<form>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
+	  <div class="mb-3">
+	    <input type="tel" class="form-control" name="cpf" id="inputCPF" placeholder="CPF" pattern="(\d{3}\.?\d{3}\.?\d{3}-?\d{2})" required>
+	   <!-- oninvalid="this.setCustomValidity('ERROR_TEXT')" oninput="this.setCustomValidity('')"  -->
+	  </div>
+	  
+	  <script type="text/javascript">
+		$("#inputCPF").mask("000.000.000-00");
+	  </script>
+
+	  <div class="mb-3">
+	    <input type="number" class="form-control" name="age" id="age" placeholder="Age" required>
+	  </div>
+
+
+	  <div class="mb-3 form-check">
+	    <input type="checkbox" class="form-check-input" id="checkboxTermsOfUse" required>
+	    <label class="form-check-label" for="checkboxTermsOfUse">I accept the <a href="{% url 'terms_and_conditions' %}">terms and conditions</a>.</label>
+	  </div>
+
+	  <button type="submit" class="btn btn-secondary">Submit</button>
+	</form>
+
+</div>
+
+
+{% endblock %}
